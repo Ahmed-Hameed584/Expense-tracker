@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="transactions.css">
+</head>
+
+<body>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <div style="width:20px; height:20px; background:var(--primary); border-radius:5px"></div>
+            Expense <span>Tracker</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-item">🏠 Home</a></li>
+            <li><a href="dashboard.html" class="nav-item">📊 Dashboard</a></li>
+            <li><a href="transactions.html" class="nav-item active">📜 Transactions</a></li>
+            <li id="admin-link" style="display:none;"><a href="#" class="nav-item" onclick="showAdminPanel()">👑 Admin
+                    Panel</a></li>
+            <li><a href="#" class="nav-item" onclick="logout()" style="margin-top: 20px; color: #d44d4d;">🚪 Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <h2 style="flex: 1; margin-left: 15px;">Transactions History</h2>
+            <div class="top-actions">
+                <button class="action-btn btn-primary btn-export" onclick="exportTransactionsPDF()" style="padding:10px 16px;">📄 Export PDF</button>
+            </div>
+            <div class="btn-group">
+                <button class="action-btn btn-success" onclick="openModal('income')"
+                    style="padding:10px 20px; border:none; border-radius:8px; cursor:pointer; color:white;">+
+                    Income</button>
+                <button class="action-btn btn-primary" onclick="openModal('add')"
+                    style="padding:10px 20px; border:none; border-radius:8px; cursor:pointer; color:white; background:var(--primary); margin-left:10px;">+
+                    Expense</button>
+            </div>
+        </header>
+
+        <input type="text" id="tableSearch" class="search-input" placeholder="Search transactions..."
+            oninput="loadTable()">
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="fullTransactionTable"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="expenseModal"
+        style="position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; justify-content:center; align-items:center; z-index:2000;">
+        <div class="modal-content"
+            style="background:#23242e; width:450px; border-radius:12px; padding:30px; border:1px solid #333;">
+            <h3 id="modalTitle" style="margin-bottom:20px;">Entry</h3>
+            <form id="expenseForm">
+                <input type="date" class="form-control" id="transDate" required
+                    style="width:100%; background:var(--bg-input); border:1px solid #333; color:white; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <input type="number" step="0.01" class="form-control" id="transAmount" placeholder="Amount" required
+                    style="width:100%; background:var(--bg-input); border:1px solid #333; color:white; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <select class="form-control" id="transCategory"
+                    style="width:100%; background:var(--bg-input); border:1px solid #333; color:white; padding:12px; border-radius:8px; margin-bottom:15px;"></select>
+                <input type="text" class="form-control" id="transDesc" placeholder="Note (Optional)"
+                    style="width:100%; background:var(--bg-input); border:1px solid #333; color:white; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <div style="display:flex; justify-content: flex-end; gap:10px;">
+                    <button type="button" class="action-btn"
+                        style="background:#444; border:none; padding:10px 20px; border-radius:8px; color:white; cursor:pointer;"
+                        onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="action-btn btn-primary"
+                        style="background:var(--primary); border:none; padding:10px 20px; border-radius:8px; color:white; cursor:pointer;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="transactions.js"></script>
+</body>
+
+</html>

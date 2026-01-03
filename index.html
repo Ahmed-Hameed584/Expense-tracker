@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Tracking</title>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">
+            <div style="width:20px; height:20px; background:var(--primary); border-radius:4px"></div>
+            Expense<span>Tracker</span>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#" onclick="openModal('auth-modal'); flipToSignin();">Sign In</a></li>
+            <li><a href="#" onclick="openModal('auth-modal'); flipToSignup();" class="btn-primary" style="padding: 10px 20px; font-size: 14px;">Sign Up</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Take Control of Your Money</h1>
+        <p>Simple, beautiful, and powerful financial tracking. Monitor your spending, set budgets, and grow your savings
+            with our interactive dashboard.</p>
+
+        <a href="dashboard.html" class="btn-primary1">Go to Dashboard →</a>
+
+        <div class="preview-container">
+            <div style="background: var(--bg-accent); padding: 80px; color: #444; font-weight: bold;">
+                [ DASHBOARD PREVIEW AREA ]
+                <p style="font-size: 12px; color: #666; font-weight: normal; "></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2023 FinDash Inc. All rights reserved.
+    </footer>
+
+    <!-- Auth Modal (Flip Card) -->
+    <div id="auth-modal" class="modal">
+        <div class="flip-card" id="auth-flip-card">
+            <div class="flip-card-inner">
+                <!-- Sign In Front -->
+                <div class="flip-card-front">
+                    <span class="modal-close" onclick="closeModal('auth-modal')">&times;</span>
+                    <div class="modal-content">
+                        <h2 style="color: var(--text-main);">Sign <span>In</span></h2>
+                        <form id="signin-form">
+                            <div class="form-group">
+                                <label for="signin-email">Email</label>
+                                <input type="email" id="signin-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signin-password">Password</label>
+                                <input type="password" id="signin-password" required>
+                            </div>
+                            <div class="error-message" id="signin-error"></div>
+                            <div class="modal-buttons">
+                                <button type="button" class="btn-modal btn-secondary-modal" onclick="closeModal('auth-modal')">Cancel</button>
+                                <button type="submit" class="btn-modal btn-primary-modal">Sign In</button>
+                            </div>
+                        </form>
+                        <div class="forgot-password-link">
+                            <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+                        </div>
+                        <div class="switch-modal">
+                            Don't have an account? <a href="#" onclick="flipToSignup()">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sign Up Back -->
+                <div class="flip-card-back">
+                    <span class="modal-close" onclick="closeModal('auth-modal')">&times;</span>
+                    <div class="modal-content">
+                        <h2>Sign Up</h2>
+                        <form id="signup-form">
+                            <div class="form-group">
+                                <label for="signup-name">Full Name</label>
+                                <input type="text" id="signup-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-email">Email</label>
+                                <input type="email" id="signup-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-password">Password</label>
+                                <input type="password" id="signup-password" required minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-confirm-password">Confirm Password</label>
+                                <input type="password" id="signup-confirm-password" required minlength="6">
+                            </div>
+                            <div class="error-message" id="signup-error"></div>
+                            <div class="modal-buttons">
+                                <button type="button" class="btn-modal btn-secondary-modal" onclick="closeModal('auth-modal')">Cancel</button>
+                                <button type="submit" class="btn-modal btn-primary-modal">Sign Up</button>
+                            </div>
+                        </form>
+                        <div class="switch-modal">
+                            Already have an account? <a href="#" onclick="flipToSignin()">Sign In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px; margin: 5% auto;">
+            <span class="modal-close" onclick="closeModal('forgot-password-modal')">&times;</span>
+            <div class="modal-content">
+                <h2 style="text-align: center; margin-bottom: 20px;">Reset Password</h2>
+
+                <!-- Step 1: Enter Email -->
+                <div id="forgot-step-1">
+                    <p style="text-align: center; color: #8b8c95; margin-bottom: 20px; font-size: 14px;">
+                        Enter your email address and we'll send you a reset code.
+                    </p>
+                    <form id="forgot-email-form">
+                        <div class="form-group">
+                            <label for="forgot-email">Email Address</label>
+                            <input type="email" id="forgot-email" required placeholder="Enter your email">
+                        </div>
+                        <div class="error-message" id="forgot-email-error"></div>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn-modal btn-secondary-modal" onclick="closeModal('forgot-password-modal')">Cancel</button>
+                            <button type="submit" class="btn-modal btn-primary-modal">Send Reset Code</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Enter Reset Code -->
+                <div id="forgot-step-2" style="display: none;">
+                    <p style="text-align: center; color: #8b8c95; margin-bottom: 20px; font-size: 14px;">
+                        We've sent a reset code to <span id="reset-email-display"></span>
+                    </p>
+                    <form id="forgot-code-form">
+                        <div class="form-group">
+                            <label for="reset-code">Reset Code</label>
+                            <input type="text" id="reset-code" required placeholder="Enter 6-digit code" maxlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" required placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-new-password">Confirm New Password</label>
+                            <input type="password" id="confirm-new-password" required placeholder="Confirm new password">
+                        </div>
+                        <div class="error-message" id="forgot-code-error"></div>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn-modal btn-secondary-modal" onclick="backToEmailStep()">Back</button>
+                            <button type="submit" class="btn-modal btn-primary-modal">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div id="forgot-step-3" style="display: none; text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
+                    <h3 style="color: var(--success); margin-bottom: 15px;">Password Reset Successful!</h3>
+                    <p style="color: #8b8c95; margin-bottom: 20px;">
+                        Your password has been updated. You can now sign in with your new password.
+                    </p>
+                    <button class="btn-modal btn-primary-modal" onclick="closeModal('forgot-password-modal'); openModal('auth-modal'); flipToSignin();" style="width: 100%;">Sign In Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
